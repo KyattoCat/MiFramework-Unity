@@ -62,7 +62,10 @@ namespace MiFramework.Event
                 // 捕获异常
                 try
                 {
-                    eventHandler?.Invoke(e);
+                    if (e.bSupportAsync)
+                        eventHandler?.BeginInvoke(e, null, null);
+                    else
+                        eventHandler?.Invoke(e);
                 }
                 catch (Exception ex)
                 {
