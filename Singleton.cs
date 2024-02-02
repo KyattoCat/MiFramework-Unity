@@ -2,8 +2,7 @@
 {
     internal sealed class Singleton<T> where T : class, new()
     {
-        private static readonly object lockObject = new();
-
+        private static readonly object lockObject = new object();
         private static T _instance;
         public static T Instance
         {

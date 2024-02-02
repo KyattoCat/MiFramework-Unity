@@ -138,7 +138,7 @@ public class TypewriterStorage
     {
         if (string.IsNullOrEmpty(content))
         {
-            DebugTraceCommon.traceError("subtitle is empty or null");
+            Debug.Log("subtitle is empty or null");
             return false;
         }
 
@@ -174,13 +174,13 @@ public class TypewriterStorage
                     }
                     else
                     {
-                        DebugTraceCommon.traceError($"Tag Mismatch {startTag} & {endTag}");
+                        Debug.Log($"Tag Mismatch {startTag} & {endTag}");
                         return false;
                     }
                 }
                 else
                 {
-                    DebugTraceCommon.traceError($"Tag Invalid");
+                    Debug.Log($"Tag Invalid");
                     return false;
                 }
             }

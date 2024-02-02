@@ -160,7 +160,11 @@ namespace MiFramework.Stream
 
         public float ReadFloat()
         {
+#if UNITY_2022_1_OR_NEWER
             return BitConverter.ToSingle(ReadBytes(4));
+#else
+            return BitConverter.ToSingle(ReadBytes(4), 0);
+#endif
         }
 
         public void WriteString(string data)
