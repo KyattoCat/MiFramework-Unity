@@ -44,7 +44,10 @@ namespace MiFramework.Event
 
         public void Invoke<T>() where T : EventArguments, new()
         {
-            Invoke(EventFactory.Spawn<T>());
+            using (T eventArgument = EventFactory.Spawn<T>())
+            {
+                Invoke(eventArgument);
+            }
         }
 
         public void Invoke<T>(T e) where T : EventArguments

@@ -1,9 +1,15 @@
-﻿namespace MiFramework.Event
+﻿using System;
+
+namespace MiFramework.Event
 {
-    public class EventArguments
+    public abstract class EventArguments : IDisposable
     {
-        public object sender;
         public virtual bool bSupportAsync => false;
-        public virtual void Clear() { sender = null; }
+        public abstract void Clear();
+
+        public void Dispose()
+        {
+            EventFactory.Release(this);
+        }
     }
 }

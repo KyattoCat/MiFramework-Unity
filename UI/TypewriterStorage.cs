@@ -14,6 +14,7 @@ public class TypewriterStorage
     private float endTime = 0;
     private float interval;
 
+    public float StartTime => startTime;
     public float EndTime => endTime;
     public float Interval => parseRichTextSuccess ? interval : 0;
     public int NoTagLength => parseRichTextSuccess ? noTagCharList.Count : 0;
@@ -38,12 +39,31 @@ public class TypewriterStorage
     public void SetUp(string content, float startTime, float duration, float endTime = 0)
     {
         Clear();
+        parseRichTextSuccess = ParseRichText(content);
+        if (!parseRichTextSuccess)
+            return;
         this.content = content;
         this.duration = duration;
         this.startTime = startTime;
         this.endTime = startTime + (endTime > 0 ? endTime : duration);
-        parseRichTextSuccess = ParseRichText(content);
         interval = this.duration / Mathf.Max(1, noTagCharList.Count);
+    }
+
+    public void SetUp(string content, float startTime, int perCharTime)
+    {
+        Clear();
+
+        parseRichTextSuccess = ParseRichText(content);
+        if (!parseRichTextSuccess)
+            return;
+
+        int count = noTagCharList.Count;
+        interval = perCharTime / 1000.0f;
+        duration = count * interval;
+
+        this.content = content;
+        this.startTime = startTime;
+        this.endTime = startTime + duration;
     }
 
     public void Clear()

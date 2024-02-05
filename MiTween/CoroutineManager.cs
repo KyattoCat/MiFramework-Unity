@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MiFramework.Tween
@@ -9,6 +10,10 @@ namespace MiFramework.Tween
 
         public static CoroutineManager Instance => Singleton<CoroutineManager>.Instance;
 
+        public Dictionary<int, Coroutine> allCoroutine = new Dictionary<int, Coroutine>();
+
+        private int UniqueID = 0;
+
         private GameObject root;
         private CoroutineHandler handler;
 
@@ -17,14 +22,22 @@ namespace MiFramework.Tween
             InitManager();
         }
 
-        public void StartCoroutine(IEnumerator method)
+        public int StartCoroutine(IEnumerator method)
         {
-            handler.StartCoroutine(method);
+            allCoroutine[UniqueID] = handler.StartCoroutine(method);
+            return UniqueID;
         }
 
-        public void StopCoroutine(IEnumerator method)
+        public void StopCoroutine(int uniqueID)
         {
-            handler.StopCoroutine(method);
+            if (uniqueID == 0)
+                return;
+
+            if (allCoroutine.TryGetValue(uniqueID, out var coroutine))
+            {
+                handler.StopCoroutine(coroutine);
+                allCoroutine.Remove(uniqueID);
+            }
         }
 
         private void InitManager()
