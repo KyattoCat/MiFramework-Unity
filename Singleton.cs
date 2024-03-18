@@ -1,6 +1,6 @@
 ﻿namespace MiFramework
 {
-    internal sealed class Singleton<T> where T : class, new()
+    public class Singleton<T> where T : class, new()
     {
         private static readonly object lockObject = new object();
         private static T _instance;

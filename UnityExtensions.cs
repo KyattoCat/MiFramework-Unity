@@ -35,4 +35,9 @@ public static class UnityExtensions
         canvasGroup.blocksRaycasts = bShow;
         canvasGroup.interactable = bShow;
     }
+
+    public static void SetVisible(this RectTransform rectTransform, bool bVisible)
+    {
+        rectTransform.localScale = Vector3.one * (bVisible ? 1 : 0);
+    }
 }
